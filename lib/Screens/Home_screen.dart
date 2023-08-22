@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_api_beginner/Screens/Detail_Screen.dart';
 import 'package:flutter_api_beginner/models/products.dart';
 import 'package:http/http.dart' as http;
 
@@ -58,41 +59,57 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       var pro = snapshot.data![index];
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return DetialScreen(
+                                image: pro.image,
+                                description: pro.description,
+                              );
+                            },
+                          ));
+                        },
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Flexible(
-                                flex: 1,
-                                child: Image.network(
-                                  "${pro.image}",
-                                  width: 100,
-                                ),
-                              ),
-                              Flexible(
-                                flex: 4,
-                                // ignore: sized_box_for_whitespace
-                                child: Container(
-                                  // color: Colors.red,
-                                  // width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height / 9,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Name: ${pro.title}"),
-                                      Text("Price: ${pro.price}"),
-                                    ],
+                              Row(
+                                children: [
+                                  Flexible(
+                                    flex: 1,
+                                    child: Image.network(
+                                      "${pro.image}",
+                                      width: 100,
+                                    ),
                                   ),
-                                ),
+                                  Flexible(
+                                    flex: 4,
+                                    // ignore: sized_box_for_whitespace
+                                    child: Container(
+                                      // color: Colors.red,
+                                      // width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              9,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Name: ${pro.title}"),
+                                          Text("Price: ${pro.price}"),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       );
                     });
               },
